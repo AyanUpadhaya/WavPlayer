@@ -12,6 +12,7 @@ import time
 
 #interface function
 music_file = []
+file_format = ['wav']
 global running
 running = False
 global i
@@ -22,7 +23,11 @@ def openfile():
     playlist_box.delete(1.0, END)
     filename = fd.askopenfilenames()
     for files in filename:
-        music_file.append(files)
+        ext = files.split('.')[-1]
+        if ext in file_format:
+            music_file.append(files)
+        else:
+            ms.showinfo('Error',"Unrecognized format")
     for i in music_file:
         playlist_box.insert(1.0, i.split('/')[-1]+'\n')
 
