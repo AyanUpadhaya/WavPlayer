@@ -1,7 +1,6 @@
 # Music/WAV Player in Python3
 
 from tkinter import *
-# from PIL import Image, ImageTk
 from pygame import mixer
 from tkinter import filedialog as fd
 from tkinter import messagebox as ms
