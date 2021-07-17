@@ -1,0 +1,109 @@
+# Music/WAV Player in Python3
+
+from tkinter import *
+from PIL import Image, ImageTk
+from pygame import mixer
+from tkinter import filedialog as fd
+import time
+
+
+# functionalities
+music_file = ['']
+global running
+running = False
+
+
+def openfile():
+    filename = fd.askopenfilename()
+    music_file[0] = filename
+    textentry.delete(0, END)
+    textentry.insert(0, filename.split('/')[-1])
+
+
+def play():
+    mixer.init()
+    wav_file = music_file[0]
+    mixer.music.load(wav_file)
+    mixer.music.play()
+
+
+def pause():
+    global running
+    if not running:
+        mixer.music.pause()
+        running = 'False'
+    else:
+        mixer.music.unpause()
+        running = 'True'
+
+
+def stop():
+    mixer.music.stop()
+
+
+# app interface
+root = Tk()
+root.geometry('400x400')
+root.title('Music Player')
+
+# head frame
+frame = Frame(root)
+frame.pack(pady=10)
+
+# for Storing value
+file_name = StringVar()
+
+# text entry box
+textentry = Entry(frame, width=30, bg="#ffffff", fg='black',
+                  borderwidth=0, textvariable=file_name)
+textentry.grid(row=1, column=0)
+
+# filebrowser
+folder_image = Image.open("images/folder.png")
+folder_image = folder_image.resize((50, 50), Image.ANTIALIAS)
+folder_icon = ImageTk.PhotoImage(folder_image)
+
+filebrowser = Button(frame, image=folder_icon, borderwidth=0, command=openfile)
+filebrowser.grid(row=1, column=1)
+
+
+# playing button image/icon
+player_image = Image.open("images/icon1.png")
+player_image = player_image.resize((55, 55), Image.ANTIALIAS)
+player_icon = ImageTk.PhotoImage(player_image)
+
+# pause button image/icon
+pause_image = Image.open("images/player_pause.png")
+pause_image = pause_image.resize((50, 50), Image.ANTIALIAS)
+pause_icon = ImageTk.PhotoImage(pause_image)
+
+# pause button image/icon
+pause_image = Image.open("images/player_pause.png")
+pause_image = pause_image.resize((50, 50), Image.ANTIALIAS)
+pause_icon = ImageTk.PhotoImage(pause_image)
+
+# stop button image/icon
+stop_image = Image.open("images/circle_red.png")
+stop_image = stop_image.resize((50, 50), Image.ANTIALIAS)
+stop_icon = ImageTk.PhotoImage(stop_image)
+
+
+# buttons frame
+button_frame = Frame(root)
+button_frame.pack(pady=100)
+
+# all buttons
+
+player_button = Button(button_frame, image=player_icon,
+                       borderwidth=0, command=play)
+player_button.grid(row=0, column=0)
+
+pause_button = Button(button_frame, image=pause_icon,
+                      borderwidth=0, command=pause)
+pause_button.grid(row=0, column=1, padx=10)
+
+stop_button = Button(button_frame, image=stop_icon,
+                     borderwidth=0, command=stop)
+stop_button.grid(row=0, column=2)
+
+root.mainloop()
